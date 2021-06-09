@@ -13,7 +13,7 @@ class Todo(Base):
     title = Column(String, index=True)
     description = Column(Text)
     important = Column(Boolean)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     owner = relationship("User", back_populates="todo")
