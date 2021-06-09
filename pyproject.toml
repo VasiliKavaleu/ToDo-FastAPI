@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "todo_fastapi"
+version = "0.1.0"
+description = "Simple realisation of To Do App"
+authors = ["Vasili Kavaleu <v.kavaleu@naveksoft.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = {extras = ["all"], version = "^0.65.1"}
+alembic = "^1.6.5"
+SQLAlchemy = "^1.4.17"
+psycopg2-binary = "^2.8.6"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
