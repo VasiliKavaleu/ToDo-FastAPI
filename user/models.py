@@ -14,3 +14,4 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
     # items = relationship("Todo", back_populates="owner")
+

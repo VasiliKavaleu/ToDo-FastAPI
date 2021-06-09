@@ -19,3 +19,4 @@ class Todo(Base):
     owner = relationship("User", back_populates="todo")
 
 
+# todo = Todo.__table__

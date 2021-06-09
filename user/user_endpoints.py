@@ -35,8 +35,7 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
         db.add(user)
         db.commit()
     except IntegrityError:
-        db.rollback()
-        raise HTTPException(status_code=400, detail='Email is taken')
+        raise HTTPException(status_code=400, detail='Email is taken!')
     else:
         db.refresh(user)
         return user
@@ -48,23 +47,15 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
 
 @router.post('/login')
 def login(login_data: UserLogin, db: Session = Depends(get_db)):
-        db.query(User).filter()
+        user = db.query(User).filter(User.email == login_data.email).first()
+        if (user is None) or (not auth_handler.verify_password(login_data.password, user.hashed_password)):
+            raise HTTPException(status_code=401, detail='Invalid username and/or password')
+        token = auth_handler.encode_token(user.id)
+
         # query = users.select().where(users.c.email==login_data.email)
-        print(query)
         #user = await self.database.fetch_one(query)
-        return
+        return { 'token': token }
 
-
-
-# @app.post('/login')
-# def login(auth_details: AuthDetails):
-#     user = None
-#     for x in users:
-#         if x['username'] == auth_details.username:
-#             user = x
-#             break
-    
-#     if (user is None) or (not auth_handler.verify_password(auth_details.password, user['password'])):
-#         raise HTTPException(status_code=401, detail='Invalid username and/or password')
-#     token = auth_handler.encode_token(user['username'])
-#     return { 'token': token }
+@router.get('/me', response_model=UserDetail)
+def get_detail_user(user_id=Depends(auth_handler.auth_wrapper), db: Session = Depends(get_db)):
+    return db.query(User).filter(User.id == user_id).first()
