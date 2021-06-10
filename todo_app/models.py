@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from datetime import datetime
 
@@ -16,7 +16,7 @@ class Todo(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
-    owner = relationship("User", back_populates="todo")
+    owner = relationship("User", backref="todo")
 
 
-# todo = Todo.__table__
+todo = Todo.__table__

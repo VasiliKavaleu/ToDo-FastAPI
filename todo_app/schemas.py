@@ -9,6 +9,9 @@ class TodoBase(BaseModel):
     important: bool
     created_at: datetime
 
+    class Config:
+      orm_mode = True
+
 
 class TodoCreate(TodoBase):
   ...
@@ -17,3 +20,21 @@ class TodoCreate(TodoBase):
       orm_mode = True
 
 
+class TodoList(TodoBase):
+    id: int
+
+
+class TodoDetail(TodoList):
+    ...
+
+    # class Config:
+    #   orm_mode = True
+
+
+class TodoUpdate(BaseModel):
+    title: str
+    description: str
+    important: bool
+
+    class Config:
+      orm_mode = True

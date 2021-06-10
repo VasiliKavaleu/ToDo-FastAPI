@@ -13,5 +13,5 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    # items = relationship("Todo", back_populates="owner")
+    # todo = relationship("Todo", back_populates="owner")
 
