@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 
 from core.db import Base
+from tags.models import todos_tags
 
 
 class Todo(Base):
@@ -17,6 +18,9 @@ class Todo(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     owner = relationship("User", backref="todo")
+    todo = relationship("Tag", 
+                    secondary=todos_tags, 
+                    back_populates="todos")
 
 
 todo = Todo.__table__

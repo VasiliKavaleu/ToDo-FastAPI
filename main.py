@@ -3,7 +3,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 
 from core.db import SessionLocal
-from routers import routes
+from core.routers import routes
 
 
 app = FastAPI()
