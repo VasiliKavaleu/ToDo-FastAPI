@@ -25,5 +25,5 @@ def create_tag(payload: TagCreate, db: Session = Depends(get_db)):
 
 @router.delete('/{pk}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_tag(pk, db: Session = Depends(get_db)):
-    return services.create_tag(db, pk)
+    return services.delete_tag(db, pk)
 

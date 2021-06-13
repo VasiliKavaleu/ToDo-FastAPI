@@ -8,7 +8,7 @@ from sqlalchemy.sql.schema import Table
 from core.db import Base
 
 
-todos_tags = Table('todos_tags', Base.metadata, 
+todos_tags = Table('todos_tags', Base.metadata,
     Column('todo_id', Integer, ForeignKey('todo.id')),
     Column('tag_id', Integer, ForeignKey('tags.id'))
     )
@@ -20,8 +20,8 @@ class Tag(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
 
-    todo = relationship("Todo", 
-                        secondary=todos_tags, 
+    todos = relationship("Todo",
+                        secondary=todos_tags,
                         back_populates="tags")
 
 

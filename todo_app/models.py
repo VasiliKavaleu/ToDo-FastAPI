@@ -18,8 +18,8 @@ class Todo(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     owner = relationship("User", backref="todo")
-    todo = relationship("Tag", 
-                    secondary=todos_tags, 
+    tags = relationship("Tag",
+                    secondary=todos_tags,
                     back_populates="todos")
 
 

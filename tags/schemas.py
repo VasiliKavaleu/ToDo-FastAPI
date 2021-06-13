@@ -12,3 +12,5 @@ class TagCreate(TagBase):
 class TagList(TagBase):
     id: int
 
+    class Config:
+        orm_mode = True
