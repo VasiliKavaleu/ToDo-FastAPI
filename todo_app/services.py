@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 
 from user.models import User
+from tags.services import get_tags_by_id
 from .models import Todo
 
 
@@ -9,12 +10,22 @@ def get_users_todo(db, user_id):
   return user.todo
 
 
+def get_todo_by_id(db, todo_id):
+  return db.query(Todo).get(todo_id)
+
+
 def create_users_todo(db, user_id, payload):
-  new_todo = Todo(**payload.dict(), owner_id=user_id)
-  db.add(new_todo)
+  data = payload.dict()
+  tags = data.pop('tags')
+  todo = Todo(**data, owner_id=user_id)
+  db.add(todo)
+  if tags:
+    for tag in tags:
+      todo.tags.append(get_tags_by_id(db, tag))
+      db.add(todo)
   db.commit()
-  db.refresh(new_todo)
-  return new_todo
+  db.refresh(todo)
+  return todo
 
 
 def delete_users_todo(db, user_id, todo_id):
@@ -30,4 +41,4 @@ def update_users_todo(db, user_id, todo_id, payload):
   if not user_todo:
     raise HTTPException(status_code=404, detail='ToDo not found')
   db.commit()
-  return {'id': todo_id, **payload.dict()}
+  return get_todo_by_id(db, todo_id)

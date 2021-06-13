@@ -1,6 +1,9 @@
 from pydantic import BaseModel
 
 from datetime import datetime
+from typing import List
+
+from tags.schemas import TagId, TagList
 
 
 class TodoBase(BaseModel):
@@ -15,6 +18,7 @@ class TodoBase(BaseModel):
 
 class TodoCreate(TodoBase):
     ...
+    tags: List[TagId]
 
     class Config:
         orm_mode = True
@@ -22,6 +26,7 @@ class TodoCreate(TodoBase):
 
 class TodoList(TodoBase):
     id: int
+    tags: List[TagList]
 
 
 class TodoDetail(TodoList):

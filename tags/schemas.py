@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic.errors import cls_kwargs
 
 
 class TagBase(BaseModel):
@@ -14,3 +15,6 @@ class TagList(TagBase):
 
     class Config:
         orm_mode = True
+
+class TagId(BaseModel):
+    id: int

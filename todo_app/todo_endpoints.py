@@ -33,7 +33,7 @@ def delete_todo(pk: int,
     return services.delete_users_todo(db, user_id, pk)
 
 
-@router.put('/{pk}', status_code=status.HTTP_200_OK)
+@router.put('/{pk}', response_model=TodoDetail, status_code=status.HTTP_200_OK)
 def todo_update(pk: int,
                 payload: TodoUpdate,
                 db: Session = Depends(get_db),

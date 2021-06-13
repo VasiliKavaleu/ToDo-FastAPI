@@ -6,6 +6,10 @@ def get_tags(db):
     return db.query(Tag).all()
 
 
+def get_tags_by_id(db, tag):
+    return db.query(Tag).get(tag['id'])
+
+
 def create_tag(db, payload):
     new_tag = Tag(**payload.dict())
     db.add(new_tag)
