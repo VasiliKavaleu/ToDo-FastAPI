@@ -39,3 +39,10 @@ def todo_update(pk: int,
                 db: Session = Depends(get_db),
                 user_id=Depends(auth_handler.auth_wrapper)):
     return services.update_users_todo(db, user_id, pk, payload)
+
+
+@router.get('/by_tags/{pk}', response_model=List[TodoList])
+def get_todo_by_tag(pk: int,
+                    db: Session = Depends(get_db),
+                    user_id=Depends(auth_handler.auth_wrapper)):
+    return services.get_tags_todo(db, pk)

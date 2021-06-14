@@ -1,8 +1,10 @@
 from fastapi import HTTPException
 
+from sqlalchemy import and_
+
 from user.models import User
 from tags.services import get_tags_by_id
-from tags.models import Tag
+from tags.models import Tag, tags, todos_tags
 from .models import Todo
 
 
@@ -38,7 +40,6 @@ def delete_users_todo(db, user_id, todo_id):
 
 
 def update_users_todo(db, user_id, todo_id, payload):
-  print(payload.dict())
   data = payload.dict()
   tags = data.pop('tags')
   user_todo = db.query(Todo).filter_by(owner_id=user_id, id=todo_id).update(data)
@@ -52,14 +53,22 @@ def update_users_todo(db, user_id, todo_id, payload):
       todo.tags.append(get_tags_by_id(db, tag['id']))
       tags_id.append(tag['id'])
       db.add(todo)
-  print(tags_id)
-  # print(db.query(Tag, Todo).all())
+  
   tags_obj = db.query(Tag).filter(Tag.id.notin_(tags_id)).all()
   for tag_obj in tags_obj:
     try:
       todo.tags.remove(tag_obj)
     except ValueError:
-      pass  
-  print(db.query())
+      pass
+
+  q = db.query(Todo, Tag).filter(and_(
+    todos_tags.c.todo_id == Todo.id,
+    todos_tags.c.tag_id == Tag.id,
+  ))
+
   db.commit()
   return todo
+
+
+def get_tags_todo(db, tag_id):
+  return get_tags_by_id(db, tag_id).todos

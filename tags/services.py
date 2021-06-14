@@ -7,7 +7,10 @@ def get_tags(db):
 
 
 def get_tags_by_id(db, tag_id):
-    return db.query(Tag).get(tag_id)
+    tag = db.query(Tag).get(tag_id)
+    if not tag:
+        raise HTTPException(status_code=404, detail='Tag not found')
+    return tag
 
 
 def create_tag(db, payload):
