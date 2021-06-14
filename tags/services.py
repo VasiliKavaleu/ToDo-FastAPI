@@ -6,8 +6,8 @@ def get_tags(db):
     return db.query(Tag).all()
 
 
-def get_tags_by_id(db, tag):
-    return db.query(Tag).get(tag['id'])
+def get_tags_by_id(db, tag_id):
+    return db.query(Tag).get(tag_id)
 
 
 def create_tag(db, payload):

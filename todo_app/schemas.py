@@ -31,12 +31,14 @@ class TodoList(TodoBase):
 
 class TodoDetail(TodoList):
     ...
+    tags: List[TagList]
 
 
 class TodoUpdate(BaseModel):
     title: str
     description: str
     important: bool
+    tags: List[TagId]
 
     class Config:
         orm_mode = True
