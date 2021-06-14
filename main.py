@@ -1,12 +1,21 @@
 from fastapi import FastAPI
 from starlette.requests import Request
 from starlette.responses import Response
+from core.db import database
 
 from core.db import SessionLocal
 from core.routers import routes
 
 
 app = FastAPI()
+
+@app.on_event("startup")
+async def connect():
+    await database.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
 
 
 @app.middleware("http")
