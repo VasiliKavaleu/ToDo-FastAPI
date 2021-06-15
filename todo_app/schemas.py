@@ -42,3 +42,12 @@ class TodoUpdate(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class TodoListAsyncDB(BaseModel):
+    id: int
+    title: str
+    description: str
+    important: bool
+    created_at: datetime
+

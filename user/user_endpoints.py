@@ -42,7 +42,6 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
 
     # query = User.insert().values(**user.dict)
     # return await db.execute(query)
-    # return
 
 
 @router.post('/login')
