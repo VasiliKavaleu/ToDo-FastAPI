@@ -86,15 +86,6 @@ def create_review_for_book(book_id: int, user_id: int, payload: ReviewCreate, db
 
 @router.post('/user/{user_id}/book/{book_id}')
 def adding_book_to_user(book_id: int, user_id: int, db: Session = Depends(get_db)):
-    # user_book = ReaderBook(
-    #     user_id=user_id,
-    #     book_id=book_id
-    # )
-    # db.add(user_book)
-    # db.commit()
-    # db.refresh(user_book)
-    # return user_book
-
     user = db.query(Reader).get(user_id)
     if not user:
         raise HTTPException(status_code=404, detail='User not found!')
